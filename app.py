@@ -46,6 +46,20 @@ def ukhsa(res: Response) -> List[str]:
         list_of_vocs.append(pango_lineage)
     return list_of_vocs
 
+@voc_watcher.register(url="https://www.ecdc.europa.eu/en/covid-19/variants-concern")
+def ecdc(res: Response) -> List[str]:
+    soup = BeautifulSoup(res.text, 'html.parser')
+    tables = soup.find_all('table')
+    list_of_vocs = []
+    for table in tables[:2]: # Only the first two tables contain Pango lineages
+        rows = table.find_all('tr')
+        for row in rows[1:]:
+            cols = row.find_all('td')
+            pango_lineage: str = cols[1].get_text(strip=True)
+            pango_lineage = extract_first_pango_lineage(pango_lineage)
+            list_of_vocs.append(pango_lineage)
+    return list_of_vocs
+
 # @voc_watcher.register(url="https://www.cdc.gov/coronavirus/2019-ncov/variants/variant-classifications.html")
 # def cdc(res: Response) -> List[str]:
 #     soup = BeautifulSoup(res.text, 'html.parser')

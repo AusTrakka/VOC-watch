@@ -20,5 +20,11 @@
             "KP.3.1.4",
             "KS.1",
             "KP.3.2.4"
+      ],
+      "https://www.ecdc.europa.eu/en/covid-19/variants-concern": [
+            "BA.2.86",
+            "LP.8.1",
+            "NB.1.8.1",
+            "XFG"
       ]
 }
