@@ -2,6 +2,8 @@ from pathlib import Path
 from voc_watch.db import DB
 import datetime
 import requests
+import os
+
 
 class Watcher:
     def __init__(self, db: Path = None):
@@ -48,5 +50,45 @@ class Watcher:
                     if not lineage:
                         continue
                     f.write(f"{lineage}\n")
+            # Send Slack notification
+            self.send_slack_msg(name, url, list_of_vocs)
+
+    def send_slack_msg(self, name, url, vocs):
+        data = {
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"There has been an update to the {name} VOC list."
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "\n".join(vocs)
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"Source: {url}"
+                        }
+                    }
+                ]
+            }
+        hook_url = os.getenv("SLACK_HOOK_URL")
+        if not hook_url:
+            print("SLACK_HOOK_URL not set. Skipping Slack notification.")
+            return
+        r = requests.post(hook_url, json=data)]
+        if r.status_code != 200:
+            print(f"Failed to send Slack message: {r.status_code} - {r.text}")
+        else:
+            print("Slack message sent successfully.")
+
+
 
             
