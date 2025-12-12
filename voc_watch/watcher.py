@@ -42,6 +42,7 @@ class Watcher:
             print(", ".join(list_of_vocs))
             print(f"Updating {collapse_file}...")
             self.db.put(url, list_of_vocs)
+            self.send_slack_msg(name, url, list_of_vocs)
             with open(collapse_file, "w") as f:
                 date = datetime.datetime.now().strftime("%d/%m/%Y")
                 list_of_vocs = [f"# This file was automatically generated from {url} on the {date}", *list_of_vocs]
@@ -51,7 +52,6 @@ class Watcher:
                         continue
                     f.write(f"{lineage}\n")
             # Send Slack notification
-            self.send_slack_msg(name, url, list_of_vocs)
 
     def send_slack_msg(self, name, url, vocs):
         data = {
@@ -83,7 +83,7 @@ class Watcher:
         if not hook_url:
             print("SLACK_HOOK_URL not set. Skipping Slack notification.")
             return
-        r = requests.post(hook_url, json=data)]
+        r = requests.post(hook_url, json=data)
         if r.status_code != 200:
             print(f"Failed to send Slack message: {r.status_code} - {r.text}")
         else:
