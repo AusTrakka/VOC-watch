@@ -1,4 +1,5 @@
 BA.2.86
+BA.3.2
 JN.1
 KP.1.1
 KP.2
@@ -13,7 +14,6 @@ KP.3.3
 KS.1
 LP.8.1
 NB.1.8.1
-XEC
 XFG
 # Capture all other lineages
 A
