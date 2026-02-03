@@ -1,4 +1,5 @@
-# This file was automatically generated from https://www.ecdc.europa.eu/en/covid-19/variants-concern on the 27/09/2025
+# This file was automatically generated from https://www.ecdc.europa.eu/en/covid-19/variants-concern on the 03/02/2026
 BA.2.86
 NB.1.8.1
 XFG
+BA.3.2
