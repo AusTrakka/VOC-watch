@@ -12,7 +12,6 @@ KP.3.2
 KP.3.2.4
 KP.3.3
 KS.1
-LP.8.1
 NB.1.8.1
 XFG
 # Capture all other lineages
