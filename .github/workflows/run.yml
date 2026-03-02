@@ -29,6 +29,8 @@ jobs:
           pipenv install --deploy --dev
       
       - name: Run voc-watch
+        env:
+          SLACK_HOOK_URL: ${{ secrets.SLACK_HOOK_URL }}
         run: |
           pipenv run python app.py
 
